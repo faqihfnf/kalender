@@ -6,11 +6,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const userId = auth();
+  // const userId = auth();
 
-  if (userId != null) {
-    redirect("/events");
-  }
+  // if (userId != null) {
+  //   redirect("/events");
+  // }
 
   return (
     <div className="container mx-auto my-4 text-center">
