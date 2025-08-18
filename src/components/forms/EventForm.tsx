@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
+import { createEvent } from "@/utils/events";
 
 export default function EventForm() {
   const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -28,8 +29,12 @@ export default function EventForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof eventFormSchema>) {
+    const data = await createEvent(values);
+
+    if (data?.error) {
+      form.setError("root", { message: "Error creating event" });
+    }
   }
 
   return (
@@ -38,6 +43,11 @@ export default function EventForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
       >
+        {form.formState.errors.root && (
+          <p className="text-destructive text-sm">
+            {form.formState.errors.root.message}
+          </p>
+        )}
         {/* Event Name Input */}
         <FormField
           control={form.control}
