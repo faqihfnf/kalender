@@ -17,7 +17,19 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
-import { createEvent, updateEvent } from "@/utils/events";
+import { createEvent, deleteEvent, updateEvent } from "@/utils/events";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { useTransition } from "react";
 
 export default function EventForm({
   event,
@@ -30,6 +42,7 @@ export default function EventForm({
     isActive: boolean;
   };
 }) {
+  const [isDeletePending, startDeleteTransition] = useTransition();
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: event ?? {
@@ -131,6 +144,7 @@ export default function EventForm({
                     className="cursor-pointer"
                   />
                 </FormControl>
+                <FormLabel>Active</FormLabel>
               </div>
               <FormDescription>
                 Inactive events will not be visible for user to join
@@ -141,6 +155,48 @@ export default function EventForm({
         />
 
         <div className="flex justify-end gap-2">
+          {event && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructiveGhost"
+                  disabled={isDeletePending || form.formState.isSubmitting}
+                >
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure you want to delete this event?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the event and remove it from your account.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={isDeletePending || form.formState.isSubmitting}
+                    onClick={() => {
+                      startDeleteTransition(async () => {
+                        const data = await deleteEvent(event.id);
+
+                        if (data?.error) {
+                          form.setError("root", {
+                            message: "Error deleting event",
+                          });
+                        }
+                      });
+                    }}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
           <Button asChild variant={"outline"}>
             <Link href="/events">Cancel</Link>
           </Button>

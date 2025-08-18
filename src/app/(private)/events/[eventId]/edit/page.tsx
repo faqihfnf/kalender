@@ -6,6 +6,8 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const revalidate = 0;
+
 export default async function EditEventPage({
   params: { eventId },
 }: {

@@ -11,11 +11,12 @@ import {
 import { db } from "@/drizzle/db";
 import { formatEventDescription } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
-import { RedirectToSignIn, UserButton } from "@clerk/nextjs";
+import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { CalendarPlus, CalendarRange } from "lucide-react";
-
 import Link from "next/link";
+
+export const revalidate = 0;
 
 export default async function EventsPage() {
   const authResult = await auth();
