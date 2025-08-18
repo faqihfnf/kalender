@@ -17,12 +17,22 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
-import { createEvent } from "@/utils/events";
+import { createEvent, updateEvent } from "@/utils/events";
 
-export default function EventForm() {
+export default function EventForm({
+  event,
+}: {
+  event?: {
+    id: string;
+    name: string;
+    description?: string;
+    durationInMinutes: number;
+    isActive: boolean;
+  };
+}) {
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
-    defaultValues: {
+    defaultValues: event ?? {
       name: "",
       isActive: true,
       durationInMinutes: 30,
@@ -30,7 +40,9 @@ export default function EventForm() {
   });
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    const data = await createEvent(values);
+    const action =
+      event == null ? createEvent : updateEvent.bind(null, event.id);
+    const data = await action(values);
 
     if (data?.error) {
       form.setError("root", { message: "Error creating event" });
