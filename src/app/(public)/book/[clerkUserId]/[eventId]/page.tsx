@@ -1,3 +1,4 @@
+import NoTimeSlots from "@/components/section/NoTimeSlots";
 import { db } from "@/drizzle/db";
 import { getValidTimesFromSchedule } from "@/lib/getValidTimesFromSchedule";
 import { clerkClient } from "@clerk/nextjs/server";
@@ -33,5 +34,8 @@ export default async function BookEventPage({
     eachMinuteOfInterval({ start: startDate, end: endDate }, { step: 15 }),
     event,
   );
+
+  if (validTimes.length === 0)
+    return <NoTimeSlots event={event} calendarUser={calendarUser} />;
   return <div>Book Event page</div>;
 }
