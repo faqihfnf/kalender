@@ -1,3 +1,4 @@
+import BookingCard from "@/components/section/BookingCard";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -40,42 +41,9 @@ export default async function BookingPage({
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-4">
         {events.map((event) => (
-          <EventCard key={event.id} {...event} />
+          <BookingCard key={event.id} {...event} />
         ))}
       </div>
     </div>
-  );
-}
-
-type EventCardProps = {
-  id: string;
-  name: string;
-  description: string | null;
-  durationInMinutes: number;
-  clerkUserId: string;
-};
-
-function EventCard({
-  id,
-  name,
-  description,
-  durationInMinutes,
-  clerkUserId,
-}: EventCardProps) {
-  return (
-    <Card className="flex flex-col">
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>
-          {formatEventDescription(durationInMinutes)}
-        </CardDescription>
-      </CardHeader>
-      {description != null && <CardContent>{description}</CardContent>}
-      <CardFooter className="mt-auto flex justify-end gap-2">
-        <Button asChild>
-          <Link href={`/book/${clerkUserId}/${id}`}>Select</Link>
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }
