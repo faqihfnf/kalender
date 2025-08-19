@@ -9,15 +9,19 @@ import React from "react";
 export const revalidate = 0;
 
 export default async function EditEventPage({
-  params: { eventId },
+  params,
 }: {
-  params: { eventId: string };
+  params: Promise<{ eventId: string }>;
 }) {
   const { userId } = await auth();
 
   if (!userId || userId == null) {
     return <RedirectToSignIn />;
   }
+
+  // Await params before using its properties
+  const { eventId } = await params;
+
   const event = await db.query.EventTable.findFirst({
     where: ({ id, clerkUserId }, { and, eq }) =>
       and(eq(clerkUserId, userId), eq(id, eventId)),
