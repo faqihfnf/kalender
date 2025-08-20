@@ -1,4 +1,12 @@
+import MeetingForm from "@/components/forms/MeetingForm";
 import NoTimeSlots from "@/components/section/NoTimeSlots";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { db } from "@/drizzle/db";
 import { getValidTimesFromSchedule } from "@/lib/getValidTimesFromSchedule";
 import { clerkClient } from "@clerk/nextjs/server";
@@ -37,5 +45,24 @@ export default async function BookEventPage({
 
   if (validTimes.length === 0)
     return <NoTimeSlots event={event} calendarUser={calendarUser} />;
-  return <div>Book Event page</div>;
+
+  return (
+    <Card className="mx-auto max-w-4xl">
+      <CardHeader>
+        <CardTitle>
+          Book {event.name} with {calendarUser.fullName}
+        </CardTitle>
+        {event.description && (
+          <CardDescription>{event.description}</CardDescription>
+        )}
+      </CardHeader>
+      <CardContent>
+        <MeetingForm
+          validTimes={validTimes}
+          eventId={event.id}
+          clerkUserId={clerkUserId}
+        />
+      </CardContent>
+    </Card>
+  );
 }

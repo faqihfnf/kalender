@@ -225,11 +225,7 @@ export default function ScheduleForm({
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button
-            disabled={form.formState.isSubmitting}
-            variant={"primary"}
-            type="submit"
-          >
+          <Button disabled={form.formState.isSubmitting} type="submit">
             Save
           </Button>
         </div>
