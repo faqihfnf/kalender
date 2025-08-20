@@ -18,6 +18,8 @@ import {
 } from "date-fns";
 import { notFound } from "next/navigation";
 
+export const revalidate = 0;
+
 export default async function BookEventPage({
   params: { clerkUserId, eventId },
 }: {

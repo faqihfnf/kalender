@@ -19,6 +19,10 @@ export default function Home() {
         <Button>
           <Link href="/sign-in">Sign In</Link>
         </Button>
+        <Button>
+          <Link href="/events">Go To Events</Link>
+        </Button>
+
         <UserButton />
       </div>
     </div>
