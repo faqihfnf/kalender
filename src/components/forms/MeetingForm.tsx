@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,20 +14,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Textarea } from "../ui/textarea";
-import { Switch } from "../ui/switch";
-import { createEvent, deleteEvent, updateEvent } from "@/utils/events";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
-import { useMemo, useTransition } from "react";
+
+import { useMemo } from "react";
 import { meetingFormSchema } from "@/schema/meetings";
 import {
   Select,
@@ -63,6 +50,11 @@ export default function MeetingForm({
     resolver: zodResolver(meetingFormSchema),
     defaultValues: {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      // date: undefined, // Keep undefined for date picker
+      // startTime: undefined, // Keep undefined for time picker
+      guestName: "", // Add default empty string
+      guestEmail: "", // Add default empty string
+      guestNotes: "", // Add default empty string
     },
   });
 

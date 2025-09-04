@@ -205,7 +205,6 @@ export default function EventForm({
             <Link href="/events">Cancel</Link>
           </Button>
           <Button
-            variant={"primary"}
             type="submit"
             disabled={isDeletePending || form.formState.isSubmitting}
           >

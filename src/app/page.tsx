@@ -1,9 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/clerk-react";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default function Home() {
   // const userId = auth();

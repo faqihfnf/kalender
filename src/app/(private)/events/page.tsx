@@ -1,17 +1,7 @@
-import { CopyEventButton } from "@/components/section/CopyEventButton";
 import EventCard from "@/components/section/EventCard";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { db } from "@/drizzle/db";
-import { formatEventDescription } from "@/lib/formatters";
-import { cn } from "@/lib/utils";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { CalendarPlus, CalendarRange } from "lucide-react";

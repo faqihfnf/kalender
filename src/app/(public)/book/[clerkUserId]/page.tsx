@@ -1,25 +1,17 @@
 import BookingCard from "@/components/section/BookingCard";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { db } from "@/drizzle/db";
-import { formatEventDescription } from "@/lib/formatters";
-import { cn } from "@/lib/utils";
 import { clerkClient } from "@clerk/nextjs/server";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function BookingPage({
-  params: { clerkUserId },
+  params,
 }: {
-  params: { clerkUserId: string };
+  params: Promise<{ clerkUserId: string }>;
 }) {
+  // Await the params Promise
+  const { clerkUserId } = await params;
+
   const events = await db.query.EventTable.findMany({
     where: ({ clerkUserId: userIdCol, isActive }, { eq, and }) =>
       and(eq(userIdCol, clerkUserId), eq(isActive, true)),
