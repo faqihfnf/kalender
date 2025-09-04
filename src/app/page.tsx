@@ -48,11 +48,16 @@ export default function Home() {
               orang lain pilih waktu yang pas, dan semuanya sinkron otomatis.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
-              <Button size="lg" asChild>
-                <Link href="/sign-up">Mulai Gratis</Link>
+              <Button
+                className="lg:w-full"
+                variant={"primary"}
+                size="lg"
+                asChild
+              >
+                <Link href="/events">Mulai Event</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/events">Lihat Demo</Link>
+              <Button className="lg:w-full" size="lg" variant="outline" asChild>
+                <Link href="/schedule">Lihat Jadwal</Link>
               </Button>
             </div>
           </motion.div>
